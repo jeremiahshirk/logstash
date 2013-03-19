@@ -22,9 +22,12 @@ Gem::Specification.new do |gem|
   gem.add_runtime_dependency "minitest" # for running the tests from the jar
   gem.add_runtime_dependency "pry"
   gem.add_runtime_dependency "stud"
+  gem.add_runtime_dependency "sys-uname" # for platform detection
+  gem.add_runtime_dependency "clamp" # for command line args/flags
+  gem.add_runtime_dependency "i18n"
 
   # Web dependencies
-  gem.add_runtime_dependency "ftw", ["~> 0.0.26"]
+  gem.add_runtime_dependency "ftw", ["~> 0.0.27"]
   gem.add_runtime_dependency "haml"
   gem.add_runtime_dependency "rack"
   gem.add_runtime_dependency "sass"
@@ -32,13 +35,14 @@ Gem::Specification.new do |gem|
 
   # Input/Output/Filter dependencies
   #TODO Can these be optional?
+  gem.add_runtime_dependency "awesome_print"
   gem.add_runtime_dependency "aws-sdk"
   gem.add_runtime_dependency "heroku"
   gem.add_runtime_dependency "addressable", ["~> 2.2.6"]
-  gem.add_runtime_dependency "bunny"
+  gem.add_runtime_dependency "bunny", [">= 0.9.0.pre6"]
   gem.add_runtime_dependency "ffi"
   gem.add_runtime_dependency "ffi-rzmq", ["0.9.3"]
-  gem.add_runtime_dependency "filewatch", ["0.5.0"]
+  gem.add_runtime_dependency "filewatch", ["0.5.1"]
   gem.add_runtime_dependency "gelfd", ["0.2.0"]
   gem.add_runtime_dependency "gelf", ["1.3.2"]
   gem.add_runtime_dependency "gmetric", ["0.1.3"]
@@ -54,23 +58,28 @@ Gem::Specification.new do |gem|
   gem.add_runtime_dependency "uuidtools" # For generating amqp queue names
   gem.add_runtime_dependency "xml-simple"
   gem.add_runtime_dependency "xmpp4r", ["0.5"]
-  gem.add_runtime_dependency "jls-lumberjack", ["0.0.7"]
+  gem.add_runtime_dependency "jls-lumberjack", [">0"]
   gem.add_runtime_dependency "geoip", [">= 1.1.0"]
   gem.add_runtime_dependency "beefcake", "0.3.7"
   gem.add_runtime_dependency "php-serialize" # For input drupal_dblog
   gem.add_runtime_dependency "murmurhash3"
   gem.add_runtime_dependency "rufus-scheduler"
+  gem.add_runtime_dependency "user_agent_parser", [">= 2.0.0"]
+  gem.add_runtime_dependency "snmp"
 
   if RUBY_PLATFORM == 'java'
     gem.platform = RUBY_PLATFORM
     gem.add_runtime_dependency "jruby-elasticsearch", ["0.0.14"]
     gem.add_runtime_dependency "jruby-httpclient"
-    gem.add_runtime_dependency "jruby-openssl"
+    gem.add_runtime_dependency "bouncy-castle-java", "1.5.0146.1"
+    gem.add_runtime_dependency "jruby-openssl", "0.8.2"
     gem.add_runtime_dependency "jruby-win32ole"
     gem.add_runtime_dependency "jdbc-mysql" # For input drupal_dblog
+    gem.add_runtime_dependency "msgpack-jruby"
   else
     gem.add_runtime_dependency "excon"
     gem.add_runtime_dependency "mysql2" # For input drupal_dblog
+    gem.add_runtime_dependency "msgpack"
   end
 
   if RUBY_VERSION >= '1.9.1'
@@ -83,4 +92,5 @@ Gem::Specification.new do |gem|
   gem.add_runtime_dependency "shoulda"
   gem.add_runtime_dependency "rspec"
   gem.add_runtime_dependency "insist", "0.0.8"
+  gem.add_runtime_dependency "rumbster" # For faking smtp in email tests
 end

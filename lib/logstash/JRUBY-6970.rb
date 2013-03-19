@@ -7,6 +7,9 @@ module Kernel
       path = path.gsub(/^jar:/, "")
       puts "JRUBY-6970: require(#{path})" if ENV["REQUIRE_DEBUG"] == "1"
     end
+
+    # JRUBY-7065
+    path = File.expand_path(path) if path.include?("/../")
     return require_JRUBY_6970_hack(path)
   end
 end
@@ -44,7 +47,13 @@ class File
     def expand_path(path, dir=nil)
       if path =~ /(jar:)?file:\/.*\.jar!/
         jar, resource = path.split("!", 2)
-        return "#{jar}!#{expand_path_JRUBY_6970(resource, dir)}"
+        #p :expand_path => [jar, resource]
+        if resource.nil? || resource == ""
+          # Nothing after the "!", nothing special to handle.
+          return expand_path_JRUBY_6970(path, dir)
+        else
+          return "#{jar}!#{expand_path_JRUBY_6970(resource, dir)}"
+        end
       else
         return expand_path_JRUBY_6970(path, dir)
       end
